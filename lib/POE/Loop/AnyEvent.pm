@@ -1,4 +1,5 @@
 package POE::Loop::AnyEvent;
+# vim: ts=2 sw=2 expandtab
 
 #ABSTRACT: AnyEvent event loop support for POE
 
@@ -17,7 +18,16 @@ use warnings;
 # According to Paul Evans (IO::Async guy) we should make AnyEvent try
 # and detect a loop early before it retardedly tries to load AE::Impl::POE
 use AnyEvent;
-BEGIN { AnyEvent::detect() }
+BEGIN {
+  # Remove POE from AnyEvent's list of available models.  AnyEvent may
+  # try to load POE since it's available.  This wreaks havoc on
+  # things.  Common problems include (a) unexpected re-entrancy in POE
+  # initialization; (b) deep recursion as POE tries to dispatch its
+  # events with itself.
+
+  @AnyEvent::models = grep { $_->[1] !~ /\bPOE\b/ } @AnyEvent::models;
+  AnyEvent::detect();
+}
 
 use constant ANYEVENT_6 => $AnyEvent::VERSION >= 6;
 
