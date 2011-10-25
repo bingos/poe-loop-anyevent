@@ -184,18 +184,61 @@ sub skip_tests {
 
 =head1 SYNOPSIS
 
-See L<POE::Loop>.
+  use POE qw( Loop::AnyEvent );
+
+  # The rest of your program goes here.
+  # There should be little or now changes necessary.
+  # All POE APIs and most modules should work with no changes.
 
 =head1 DESCRIPTION
 
-POE::Loop::AnyEvent implements the interface documented in POE::Loop.
-Therefore it has no documentation of its own. Please see POE::Loop for more details.
+POE::Loop::AnyEvent replaces POE's default select() event loop with
+AnyEvent.  This allows POE programs to transparently use most of the
+event loops AnyEvent can provide.
+
+POE::Loop::AnyEvent changes POE's internal implementation without
+altering its APIs.  By design, nearly all software that are already
+uses POE should continue to work normally without any changes.
+
+=head2 Conflicts
+
+It may seem obvious, but AnyEvent::Impl::POE and POE::Loop::AnyEvent
+are mutually exclusive of one another.  Using both would result in a
+deadlock as each event system called upon the other in infinite
+recursion.
+
+This deadlock also affects AnyEvent's support of Wx and Prima.
+AnyEvent doesn't natively support these event loops.  Instead it takes
+advantage of POE's more flexible, comprehensive, and open event loop
+abstractions.
+
+=head2 Callbacks from AnyEvent to POE
+
+POE::Session's callback() and postback() methods simplify callbacks
+from plain-coderef systems like Tk and AnyEvent to POE's named event
+handlers.  Please see L<POE::Session> for more details.
+
+=head2 Private Methods
+
+POE::Loop::AnyEvent implements the private POE::Loop API.  Please see
+L<POE::Loop> for an explanation of that API, especially if you'd like
+to publish support for a new event loop.  POE is structured so that
+new event loops can be supported without core distribution changes.
+
+Also see L<POE::Test::Loops> for over 35 test files and more than 490
+tests you can use for free when writing new POE::Loop modules.
 
 =head1 SEE ALSO
 
 L<POE>
 
+L<POE::Kernel>
+
+L<POE::Session>
+
 L<POE::Loop>
+
+L<POE::Test::Loops>
 
 L<AnyEvent>
 
