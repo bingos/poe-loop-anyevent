@@ -30,7 +30,7 @@ unless (grep /^--default$/, @ARGV) {
 # Should we skip the network tests?
 
 my $prompt = (
-  "Some of POE::Loop::IO_Async's tests require a\n" .
+  "Some of POE::Loop::AnyEvent's tests require a\n" .
   "functional network.  You can skip these network\n" .
   "tests if you'd like.\n\n" .
   "Would you like to skip the network tests?"
