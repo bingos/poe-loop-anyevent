@@ -179,7 +179,7 @@ sub skip_tests {
   use POE qw( Loop::AnyEvent );
 
   # The rest of your program goes here.
-  # There should be little or now changes necessary.
+  # There should be little or no changes necessary.
   # All POE APIs and most modules should work with no changes.
 
 =head1 DESCRIPTION
