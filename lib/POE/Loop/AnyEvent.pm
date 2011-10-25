@@ -8,7 +8,6 @@ use warnings;
 
 use POE::Loop::PerlSignals;
 
-# Everything plugs into POE::Kernel.
 package # Hide from Pause
   POE::Kernel;
 
@@ -38,8 +37,6 @@ my %signal_watcher;
 my %handle_watchers;
 
 sub loop_initialize {
-  my $self = shift;
-  # bollocks really
 }
 
 sub loop_finalize {
@@ -57,7 +54,6 @@ sub loop_run {
 }
 
 sub loop_halt {
-  # who knows
   $loop->send;
 }
 
@@ -78,7 +74,6 @@ sub loop_watch_filehandle {
           }
           $self->_data_handle_enqueue_ready(MODE_RD, $fileno);
           $self->_test_if_kernel_is_idle();
-          # Return false to stop... probably not with this one.
           return 0;
         },
     );
@@ -97,7 +92,6 @@ sub loop_watch_filehandle {
           }
           $self->_data_handle_enqueue_ready(MODE_WR, $fileno);
           $self->_test_if_kernel_is_idle();
-          # Return false to stop... probably not with this one.
           return 0;
         },
     );
@@ -147,7 +141,6 @@ sub _loop_resume_timer {
 }
 
 sub loop_pause_time_watcher {
-  # does nothing
 }
 
 # Event callback to dispatch pending events.
@@ -165,7 +158,6 @@ sub _loop_event_callback {
     $_idle_timer = AnyEvent->idle( cb => \&_loop_resume_timer );
   }
 
-  # Return false to stop.
   return 0;
 }
 
