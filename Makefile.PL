@@ -60,11 +60,15 @@ WriteMakefile(
   ABSTRACT        => 'AnyEvent event loop support for POE.',
   VERSION_FROM    => 'lib/POE/Loop/AnyEvent.pm',
   META_ADD        => {
+    'meta-spec'   => { version => 2 },
     resources     => {
       license     => 'http://dev.perl.org/licenses/',
-      repository  => (
-        'https://poe.svn.sourceforge.net/svnroot/poe/trunk/polo-gtk'
-      ),
+      "homepage"  => "https://github.com/bingos/poe-loop-anyevent",
+      "repository" => {
+         "type",  "git",
+         "url", "git://github.com/bingos/poe-loop-anyevent.git",
+         "web", "https://github.com/bingos/poe-loop-anyevent"
+      },
     },
   },
   dist            => {
